@@ -1,4 +1,4 @@
-const styles = theme => { debugger; return({
+const styles = theme => ({
     secondaryBar: {
       zIndex: 0,
     },
@@ -18,6 +18,6 @@ const styles = theme => { debugger; return({
     button: {
       borderColor: 'rgba(255, 255, 255, 0.7)',
     },
-  })};
+  })
 
   export default styles

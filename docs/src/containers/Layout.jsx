@@ -4,10 +4,8 @@ import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 import Navigator from '../components/layout/Navigator';
-import Content from '../components/layout/Content';
 import Header from '../components/layout/Header';
 import theme from "../styles/material-ui/theme";
-// import styles from "../styles/material-ui/paperbase-styles";
 
 const styles = {
   root: {
@@ -66,7 +64,7 @@ class Layout extends React.Component {
           <div className={classes.appContent}>
             <Header onDrawerToggle={this.handleDrawerToggle} />
             <main className={classes.mainContent}>
-              <Content />
+            {this.props.children}
             </main>
           </div>
         </div>

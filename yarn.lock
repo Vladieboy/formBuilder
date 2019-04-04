@@ -4071,6 +4071,14 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
+formbuilder.js@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/formbuilder.js/-/formbuilder.js-2.10.0.tgz#b48375b32bbd48e6fe98e943ca5f8a5a3bfa3a19"
+  integrity sha512-r28yQu/gNWnlNPbz+ti7ws1+EDe0CTERTWWcG1TN5DI0qBeZdsSM5TjiXuritWbOZaqD1AnEuJhBUgetTQFfbg==
+  dependencies:
+    jquery "^3.1.1"
+    jquery-ui-sortable "*"
+
 forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
@@ -5642,6 +5650,16 @@ joi@^11.1.1:
     hoek "4.x.x"
     isemail "3.x.x"
     topo "2.x.x"
+
+jquery-ui-sortable@*:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/jquery-ui-sortable/-/jquery-ui-sortable-1.0.0.tgz#0ee062ce02b29b36585ede3a3e0ddde666060f96"
+  integrity sha1-DuBizgKymzZYXt46Pg3d5mYGD5Y=
+
+jquery@^3.1.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
+  integrity sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==
 
 js-levenshtein@^1.1.3:
   version "1.1.6"

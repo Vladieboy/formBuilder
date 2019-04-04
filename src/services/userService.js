@@ -37,7 +37,7 @@ const register = payload => {
         method: "post",
         data: payload,
         headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
+            "Content-Type": "application/JSON",
             "Cache-Control": "no-cache"
         }
     };

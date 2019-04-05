@@ -12,41 +12,26 @@ const VacationForm = (props) =>{
  
 
 const [vacationFormData, setVacationFormData] = useState(
-    {name: '', userId: '', notes:''}
+    {name: '', userId: '', notes:'', startDate: '', endDate: ''}
 )
 
-const [startDate, setStartDate] = useState(new Date());
-const [endDate, setEndDate] = useState(new Date());
-
-const handleEndChange = (value) => {
-console.log(value)
-setEndDate(value)
-}
-
-
-const handleStartChange = (value) => {
-console.log(value)
-setStartDate(value)
-}
 
 const handleValidSubmit = (event, values) => {
     console.log("event", event, "values", values);
-    console.log(startDate)
+    // console.log(startDate)
     setVacationFormData(values.email, values.userId, values.notes)
     saveToDB(values)
   };
 
 const saveToDB = (values) => {
-    debugger;
-    console.log(startDate, endDate, values)
 
     let obj = {
       Id: 0,
       Name: values.email,
       UserId: values.UserId,
       Notes: values.notes,
-      DateStart: startDate,
-      DateEnd: endDate
+      DateStart: values.startDate,
+      DateEnd: values.endDate
     }
     formService.createForm(obj)
 }
@@ -85,14 +70,20 @@ const saveToDB = (values) => {
                 value={vacationFormData.notes}
                 required
               />
-              <FormGroup>
-              <Label for="startDate">Start Date</Label>
-             <DatePicker name="startDate" select={startDate} onChange={handleStartChange} />
-             </FormGroup>
-             <FormGroup>
-             <Label for="endDate" >End Date</Label>
-             <DatePicker name="endDate" select={endDate} onChange={handleEndChange} />
-             </FormGroup>
+              <AvField
+              name="startDate"
+              label="StartDate"
+              type="date"
+              value={vacationFormData.startDate}
+              required
+              />
+              <AvField
+              name="endDate"
+              label="endDate"
+              type="date"
+              value={vacationFormData.endDate}
+              required
+              />
               <Button color="primary">Submit</Button>
               {vacationFormData.email}
             </AvForm>

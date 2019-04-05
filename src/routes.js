@@ -6,7 +6,7 @@ import FormBuilder from "./components/dash/formbuilder";
 import companyStructurePage from "./components/dash/comapnyStructurePage";
 import Requests from "./components/dash/Requests";
 import Dash from "./components/dash/dash";
-import vacationForm from "./components/vacationForm/vacationForm";
+import formDisplayContainer from "./components/forms/formDisplayContainer";
 
 const routes = [
   {
@@ -58,9 +58,9 @@ const routes = [
     display: true
   },
   {
-    path: "/vacationForm",
-    name: "vacationForm",
-    component: vacationForm,
+    path: "/formDisplayContainer",
+    name: "formDisplayContainer",
+    component: formDisplayContainer,
     display: true
   },
 ];

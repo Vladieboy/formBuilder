@@ -15,8 +15,8 @@ const [vacationFormData, setVacationFormData] = useState(
     {name: '', userId: '', notes:''}
 )
 
-const [startDate, setStartDate] = useState(new Date());
-const [endDate, setEndDate] = useState(new Date());
+const [startDate, setStartDate] = useState();
+const [endDate, setEndDate] = useState();
 
 const handleEndChange = (value) => {
 console.log(value)
@@ -31,7 +31,7 @@ setStartDate(value)
 
 const handleValidSubmit = (event, values) => {
     console.log("event", event, "values", values);
-    console.log(startDate)
+    console.log(startDate, endDate)
     setVacationFormData(values.email, values.userId, values.notes)
     saveToDB(values)
   };
@@ -59,7 +59,7 @@ const saveToDB = (values) => {
         <Container fluid>
         <Row>
           <Col sm="12" md={{ size: 6, offset: 3 }}>
-            <h3>Vacation Form</h3>
+            <h3>Marketing Form</h3>
             <AvForm
               onValidSubmit={handleValidSubmit}
               onInvalidSubmit={handleInvalidSubmit}
@@ -87,11 +87,22 @@ const saveToDB = (values) => {
               />
               <FormGroup>
               <Label for="startDate">Start Date</Label>
-             <DatePicker name="startDate" select={startDate} onChange={handleStartChange} />
+              <Input
+            type="datetime"
+            name="startDate"
+            id="startDate"
+            placeholder="startDate placeholder"
+          />
+             {/* <DatePicker dateFormat="YYYY-MM-DD" name="startDate" select={startDate} onChange={handleStartChange} /> */}
              </FormGroup>
              <FormGroup>
              <Label for="endDate" >End Date</Label>
-             <DatePicker name="endDate" select={endDate} onChange={handleEndChange} />
+             <Input
+            type="datetime"
+            name="endDate"
+            id="endDate"
+            placeholder="startDate placeholder"
+          />
              </FormGroup>
               <Button color="primary">Submit</Button>
               {vacationFormData.email}

@@ -5,58 +5,22 @@ import { Button, Container, Row, Col } from "reactstrap";
 import * as userService from "../../services/userService";
 
 const Registration = props => {
-<<<<<<< HEAD
-
-
-    const [formData, setFormData] = useState([{ email: '', password: '', confirmPassword: ''}])
-
-
-    const handleValidSubmit = (event, values) => {
-        console.log("event", event, "values", values)
-        
-        setFormData(values)
-      }
-
-      useEffect(() =>{
-          registerUser()
-      })
-
-      const registerUser = () => {
-          userService.register(formData)
-      }
-    
-      const handleInvalidSubmit = (event, errors, values) => {
-        console.log(errors)
-      }
-
-    return (
-        <div>
-            <h3>Registration</h3>
-        <AvForm onValidSubmit={handleValidSubmit} onInvalidSubmit={handleInvalidSubmit}>
-           <AvField name="email" label="Email Address" type="email" value={formData.email}  required  />
-           <AvField name="password" label="Password" type="password" value={formData.password}  required />
-           <AvField name="confirmPassword" label="Confirm Password" type="password" value={formData.confirmPassword}  required />
-          <Button color="primary">Submit</Button>
-          {formData.email} {formData.password}
-        </AvForm>
-
-   
-       
-      </div>
-    )
-}
-
-export default React.memo(Registration);
-=======
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [formData, setFormData] = useState([
+    { email: "", password: "", confirmPassword: "" }
+  ]);
 
   const handleValidSubmit = (event, values) => {
     console.log("event", event, "values", values);
-    setEmail(values.email);
-    setPassword(values.password);
-    setConfirmPassword(values.confirmPassword);
+
+    setFormData(values);
+  };
+
+  useEffect(() => {
+    registerUser();
+  });
+
+  const registerUser = () => {
+    userService.register(formData);
   };
 
   const handleInvalidSubmit = (event, errors, values) => {
@@ -103,4 +67,3 @@ export default React.memo(Registration);
 };
 
 export default React.memo(Registration);
->>>>>>> master

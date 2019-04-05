@@ -14,6 +14,10 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import * as accountService from "../services/accounts";
 import styles from "../styles/material-ui/login-styles";
+import Link from "@material-ui/core/Link";
+import { Link as RouterLink } from "react-router-dom";
+
+const MyLink = props => <RouterLink {...props} to="/register" />;
 
 class SignIn extends React.PureComponent {
   state = {};
@@ -89,6 +93,7 @@ class SignIn extends React.PureComponent {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+            <Link component={MyLink}>New Employee</Link>
             <Button
               type="button"
               fullWidth

@@ -1,24 +1,22 @@
-import React, { Component } from 'react';
-import Layout from './containers/Layout'
-import {withRouter, Switch, Route} from 'react-router-dom';
-import componentList from './componentList';
-import LogIn from './containers/LogIn';
-import Register from './containers/Register'
-import * as userService from './services/accounts'
-
-
+import React, { Component } from "react";
+import Layout from "./containers/Layout";
+import { withRouter, Switch, Route } from "react-router-dom";
+import componentList from "./componentList";
+import LogIn from "./containers/LogIn";
+import Register from "./containers/Register";
+import * as userService from "./services/accounts";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAuthorized: false,
+      isAuthorized: true,
       currentUser: {}
     };
   }
 
   componentDidMount() {
-    this.getCurrentUser();
+    //this.getCurrentUser();
   }
 
   getCurrentUser = () => {
@@ -28,7 +26,6 @@ class App extends Component {
       .catch(this.getCurrentOnError);
   };
   getCurrentOnSuccess = response => {
-   
     this.setState({
       isAuthorized: true,
       currentUser: response.data
@@ -42,38 +39,39 @@ class App extends Component {
     });
   };
   setAuthorized = () => {
-    this.setState({
-      isAuthorized: true
-    }, this.props.history.push("/dashboard"));
+    this.setState(
+      {
+        isAuthorized: true
+      },
+      this.props.history.push("/dashboard")
+    );
   };
   logOut = () => {
-    userService
-      .logOut()
-      this.getCurrentUser()
+    userService.logOut();
+    this.getCurrentUser();
   };
   logOutOnError = response => {
     console.log(response);
   };
 
   getComponents = (route, index) => {
-    return(
-    <Route
-      key={index}
-      {...this.props}
-      exact
-      path={route.path}
-      render={props => (
-        <route.component {...props} />
-      )}
-    />
-  )};
+    return (
+      <Route
+        key={index}
+        {...this.props}
+        exact
+        path={route.path}
+        render={props => <route.component {...props} />}
+      />
+    );
+  };
 
   getRoutes = () => {
     if (this.state.isAuthorized) {
       return (
         <Layout {...this.props} logOut={this.logOut}>
-        <Switch>{componentList.map(this.getComponents)}</Switch>
-      </Layout>
+          <Switch>{componentList.map(this.getComponents)}</Switch>
+        </Layout>
       );
     } else {
       return (
@@ -96,9 +94,7 @@ class App extends Component {
   };
 
   render() {
-    return (
-      this.getRoutes()
-    );
+    return this.getRoutes();
   }
 }
 

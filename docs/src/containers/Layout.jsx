@@ -62,7 +62,7 @@ class Layout extends React.Component {
             </Hidden>
           </nav>
           <div className={classes.appContent}>
-            <Header onDrawerToggle={this.handleDrawerToggle} />
+            <Header onDrawerToggle={this.handleDrawerToggle} {...this.props}/>
             <main className={classes.mainContent}>
             {this.props.children}
             </main>

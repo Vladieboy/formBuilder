@@ -51,9 +51,10 @@ function Header(props) {
               </Tooltip>
             </Grid>
             <Grid item>
-              <IconButton color="inherit" className={classes.iconButtonAvatar}>
+            <button type="button" onClick={props.logOut}><Typography>Log Out</Typography></button>
+              {/* <IconButton color="inherit" className={classes.iconButtonAvatar}>
                 <Avatar className={classes.avatar} src="/static/images/avatar/1.jpg" />
-              </IconButton>
+              </IconButton> */}
             </Grid>
           </Grid>
         </Toolbar>

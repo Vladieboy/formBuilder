@@ -25,13 +25,20 @@ class SignIn extends React.PureComponent {
   };
   logIn = () => {
     const payload = { ...this.state, grant_type: "password" };
+    var formBody = [];
+    for (var property in payload) {
+      var encodedKey = encodeURIComponent(property);
+      var encodedValue = encodeURIComponent(payload[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
     accountService
-      .logIn(payload)
+      .logIn(formBody)
       .then(this.onLogInSuccess)
       .catch(this.onLoginError);
   };
-  onLogInSuccess = () => {
-    this.props.history.push("/");
+  onLogInSuccess = response => {
+    sessionStorage.setItem("tokenKey", response.data.access_token);
     this.props.setAuthorized();
   };
   onLogInError = response => {

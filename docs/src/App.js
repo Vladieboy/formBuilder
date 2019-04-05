@@ -12,7 +12,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAuthorized: true,
+      isAuthorized: false,
       currentUser: {}
     };
   }
@@ -28,6 +28,7 @@ class App extends Component {
       .catch(this.getCurrentOnError);
   };
   getCurrentOnSuccess = response => {
+   
     this.setState({
       isAuthorized: true,
       currentUser: response.data
@@ -43,19 +44,19 @@ class App extends Component {
   setAuthorized = () => {
     this.setState({
       isAuthorized: true
-    });
+    }, this.props.history.push("/dashboard"));
   };
   logOut = () => {
     userService
       .logOut()
-      .then(this.getCurrentUser)
-      .catch(this.getCurrentOnError);
+      this.getCurrentUser()
   };
   logOutOnError = response => {
     console.log(response);
   };
 
-  getComponents = (route, index) => { return(
+  getComponents = (route, index) => {
+    return(
     <Route
       key={index}
       {...this.props}
@@ -70,7 +71,7 @@ class App extends Component {
   getRoutes = () => {
     if (this.state.isAuthorized) {
       return (
-        <Layout {...this.props}>
+        <Layout {...this.props} logOut={this.logOut}>
         <Switch>{componentList.map(this.getComponents)}</Switch>
       </Layout>
       );
@@ -81,7 +82,7 @@ class App extends Component {
             exact
             path="/login"
             render={props => (
-              <LogIn {...props} setAuthorized={this.getCurrentUser} />
+              <LogIn {...props} setAuthorized={this.setAuthorized} />
             )}
           />
           <Route

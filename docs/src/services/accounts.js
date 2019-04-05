@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+const tokenKey = sessionStorage.getItem("tokenKey")
+const prefix = "http://localhost:10047"
+
 const register = payload => {
  const config = {
      url: '/api/Account/Register',
@@ -10,16 +13,16 @@ const register = payload => {
 }
 const logIn = payload => {
  const config = {
-     url: 'http://localhost:7043/Token',
-     method: 'POST',
+     url: 'http://localhost:10047/Token',
+     method: 'post',
      data: payload,
-     headers: {"Content-Type": "application/x-www-form-urlencoded"}
+     headers: {"Content-Type": "application/x-www-form-urlencoded", "cache-control" : "no-cache"}
  }
  return axios(config)
 }
-const getCurrent = tokenKey => {
+const getCurrent = () => {
  const config = {
-     url: '/api/Account/UserInfo',
+     url: `${prefix}/api/Account/UserInfo`,
      method: 'GET',
      headers: {"Authorization" : `Bearer ${tokenKey}`}
  }
@@ -32,7 +35,7 @@ const logOut = () => {
 //      data: payload
 //  }
 //  return axios(config)
-window.sessionStorage.removeItem("tokenKey");
+sessionStorage.removeItem("tokenKey");
 }
 
 export {register, getCurrent, logOut, logIn}

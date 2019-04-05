@@ -1,9 +1,8 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
-
-import React, { useState } from "react";
 import { withRouter, Route, Switch } from "react-router-dom";
 import routes from "../src/routes";
+import Navbar from "./components/navbar/Navbar"
+
 
 const App = props => {
   const getRoutes = routes => {
@@ -16,7 +15,10 @@ const App = props => {
     return <Switch>{getRoutes(routes)}</Switch>;
   };
 
-  return <>{getAuthUser()}</>;
+  return <>
+  <Navbar />
+  {getAuthUser()}
+  </>;
 };
 
 export default withRouter(App);

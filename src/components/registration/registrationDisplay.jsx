@@ -40,25 +40,25 @@ const Registration = props => {
               name="email"
               label="Email Address"
               type="email"
-              value={email}
+              value={formData.email}
               required
             />
             <AvField
               name="password"
               label="Password"
               type="password"
-              value={password}
+              value={formData.password}
               required
             />
             <AvField
               name="confirmPassword"
               label="Confirm Password"
               type="password"
-              value={confirmPassword}
+              value={formData.confirmPassword}
               required
             />
             <Button color="primary">Submit</Button>
-            {email}
+            {formData.email}
           </AvForm>
         </Col>
       </Row>

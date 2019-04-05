@@ -5,7 +5,7 @@ import React, {
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { Button } from 'reactstrap';
 import * as userService from "../../services/userService"
-import {saveState, loadState} from '../../localStorage'
+import {saveState} from '../../localStorage'
 
 const Login = props => {
 
@@ -36,7 +36,7 @@ const handleValidSubmit = (event, values) => {
       }
       formBody = formBody.join("&");
       userService
-        .login(formBody).then(saveState(details))
+        .login(formBody).then(saveState(details)).catch()
   }
 
   useEffect(()=> {

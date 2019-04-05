@@ -7,8 +7,8 @@ const login = payload => {
     const config = {
         url: '/token',
         data: payload,
-        crossDomain: true,
-        withCredentials: true,
+        // crossDomain: true,
+        // withCredentials: true,
         method: "post",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",

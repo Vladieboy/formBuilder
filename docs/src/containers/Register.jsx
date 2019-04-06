@@ -12,6 +12,9 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuItem from "@material-ui/core/MenuItem";
 import styles from "../styles/material-ui/register-styles";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import * as accountServices from '../services/accounts'
 
 const companies = [
   {
@@ -21,6 +24,10 @@ const companies = [
   {
     value: "Kukdong Apparel North Carolina",
     label: "Kukdong Apparel North Carolina"
+  },
+  {
+    value: "Kukdong Apparel Mexico",
+    label: "Kukdong Apparel Mexico"
   }
 ];
 const positions = [
@@ -40,11 +47,11 @@ const positions = [
 
 const departments = [
   {
-    value: "IT",
+    value: "Information Technology",
     label: "Information Technology"
   },
   {
-    value: "HR",
+    value: "Human Resources",
     label: "Human Resources"
   },
   {
@@ -57,16 +64,36 @@ const departments = [
   }
 ];
 
+
 class Register extends React.Component {
   state = {
-    department: "",
-    company: "",
-    position: ""
+    DepartmentName: "",
+    CompanyName: "",
+    position: "",
+    isApprover: false
   };
+
+  submitRegister = () => {
+    debugger
+    let payload = {...this.state}
+    accountServices.register(payload).then(()=> this.props.history.push('/login')).catch(this.onRegisterError)
+  }
+
+  onRegisterError = response => {
+    console.log(response)
+    this.setState({
+      error: 'Oops! Looks like something went wrong.'
+    })
+  }
 
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
+    });
+  };
+  handleChangeCheckBox = e => {
+    this.setState({
+      [e.target.name]: e.target.checked
     });
   };
 
@@ -83,6 +110,10 @@ class Register extends React.Component {
           <Typography component="h1" variant="h5">
             Register Employee
           </Typography>
+
+          {/* Check to see if error message works */}
+          {this.state.error && this.state.error}
+
           <form className={classes.form}>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="email">Email Address</InputLabel>
@@ -104,13 +135,13 @@ class Register extends React.Component {
               />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="passwordConfirm">
+              <InputLabel htmlFor="ConfirmPassword">
                 Confirm Password
               </InputLabel>
               <Input
-                name="passwordConfirm"
+                name="ConfirmPassword"
                 type="password"
-                id="passwordConfirm"
+                id="ConfirmPassword"
                 onChange={this.handleChange}
               />
             </FormControl>
@@ -133,12 +164,12 @@ class Register extends React.Component {
               />
             </FormControl>
             <TextField
-              name="company"
+              name="CompanyName"
               select
               label="Company"
               fullWidth
               className={classes.textField}
-              value={this.state.company}
+              value={this.state.CompanyName}
               onChange={this.handleChange}
               SelectProps={{
                 MenuProps: {
@@ -155,12 +186,12 @@ class Register extends React.Component {
               ))}
             </TextField>
             <TextField
-              name="department"
+              name="DepartmentName"
               select
               label="Department"
               fullWidth
               className={classes.textField}
-              value={this.state.department}
+              value={this.state.DepartmentName}
               onChange={this.handleChange}
               SelectProps={{
                 MenuProps: {
@@ -198,12 +229,17 @@ class Register extends React.Component {
                 </MenuItem>
               ))}
             </TextField>
+            <FormControlLabel
+              control={<Checkbox value="isApprover" color="primary" name="isApprover" checked={this.state.isApprover} onChange={this.handleChangeCheckBox}/>}
+              label="Can approve requests in department."
+            />
             <Button
-              type="submit"
+              type="button"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={this.submitRegister}
             >
               Register
             </Button>

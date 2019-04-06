@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using DocumentsWebAPI.Models.Employees;
 using Newtonsoft.Json;
 
 namespace DocumentsWebAPI.Models
@@ -32,7 +33,7 @@ namespace DocumentsWebAPI.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class RegisterBindingModel
+    public class RegisterBindingModel : AddEmployee
     {
         [Required]
         [Display(Name = "Email")]

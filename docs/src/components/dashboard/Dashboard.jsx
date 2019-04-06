@@ -5,6 +5,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Content from "./Content";
+import ApproverRequestsTable from './ApproverRequestsTable'
 
 const styles = () => ({
   card: {
@@ -111,9 +112,8 @@ function Dashboard(props) {
           </Card>
         </div>
       </div>
-      <div className="my-5">
-        <Content {...props} />
-      </div>
+        {props.currentUser.isApprover && <ApproverRequestsTable {...props} />}
+        <Content {...props} />>
     </div>
   );
 }

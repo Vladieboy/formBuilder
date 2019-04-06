@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Button from "@material-ui/core/Button";
+import * as formServices from '../../services/forms'
 
 const styles = theme => ({
   buttons: {
@@ -19,6 +20,19 @@ const styles = theme => ({
 class VacationRequestForm extends React.PureComponent {
   state = {};
 
+  submitRequest = () => {
+    let  {EmployeeId, DepartmentId, } = this.props.currentUser 
+    let payload = {...this.state, EmployeeId, DepartmentId}
+    debugger
+    formServices.addVacation(payload).then(() => this.props.history.push('/dashboard')).catch(this.onSubmitError)
+  }
+
+  onSubmitError = () => {
+    this.setState({
+      error: 'Oops. Looks like there was an error!'
+    })
+  }
+
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -31,6 +45,7 @@ class VacationRequestForm extends React.PureComponent {
         <Typography variant="h6" gutterBottom className="my-2">
           Vacation
         </Typography>
+        {this.state.error && this.state.error}
         <Grid container spacing={24}>
           <Grid item xs={12} sm={6}>
             <TextField

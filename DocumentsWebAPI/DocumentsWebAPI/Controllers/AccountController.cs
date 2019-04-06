@@ -16,6 +16,7 @@ using Microsoft.Owin.Security.OAuth;
 using DocumentsWebAPI.Models;
 using DocumentsWebAPI.Providers;
 using DocumentsWebAPI.Results;
+using DocumentsWebAPI.Services;
 
 namespace DocumentsWebAPI.Controllers
 {
@@ -25,6 +26,7 @@ namespace DocumentsWebAPI.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        public EmployeeServices _employeeServices = new EmployeeServices();
 
         public AccountController()
         {
@@ -35,6 +37,7 @@ namespace DocumentsWebAPI.Controllers
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
+            //_employeeServices = new EmployeeServices();
         }
 
         public ApplicationUserManager UserManager
@@ -58,12 +61,16 @@ namespace DocumentsWebAPI.Controllers
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
-            return new UserInfoViewModel
+           var model =  new UserInfoViewModel
             {
                 Email = User.Identity.GetUserName(),
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
+
+            _employeeServices.SelectEmployeeByEmail(ref model);
+
+            return model;
         }
 
         // POST api/Account/Logout
@@ -336,6 +343,8 @@ namespace DocumentsWebAPI.Controllers
             {
                 return GetErrorResult(result);
             }
+
+            _employeeServices.AddEmployee(model);
 
             return Ok();
         }

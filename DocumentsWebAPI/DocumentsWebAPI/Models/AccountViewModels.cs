@@ -25,7 +25,7 @@ namespace DocumentsWebAPI.Models
         public IEnumerable<ExternalLoginViewModel> ExternalLoginProviders { get; set; }
     }
 
-    public class UserInfoViewModel
+    public class UserInfoViewModel : Employees.EmployeeBindingModels.Employee
     {
         public string Email { get; set; }
 

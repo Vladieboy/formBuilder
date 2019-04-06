@@ -35,7 +35,7 @@ const styles = theme => ({
   }
 });
 
-function Content(props) {
+function ApproverRequestsTable(props) {
   const { classes } = props;
 
   return (
@@ -93,8 +93,8 @@ function Content(props) {
   );
 }
 
-Content.propTypes = {
+ApproverRequestsTable.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Content);
+export default withStyles(styles)(ApproverRequestsTable);

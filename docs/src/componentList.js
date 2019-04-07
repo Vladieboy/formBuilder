@@ -2,6 +2,7 @@
 import Dashboard from "./components/dashboard/Dashboard";
 import Tree from "./containers/Organization";
 import CreateRequest from "./components/request/CreateRequest";
+import FormBuilder from "./containers/FormBuilder";
 
 var componentList = [
   {
@@ -22,6 +23,12 @@ var componentList = [
     nav: true,
     component: CreateRequest,
     name: "Create Request"
+  },
+  {
+    path: "/form/create",
+    nav: true,
+    component: FormBuilder,
+    name: "Create Form"
   }
 ];
 

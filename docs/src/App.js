@@ -10,13 +10,13 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAuthorized: false,
+      isAuthorized: true,
       currentUser: {}
     };
   }
 
   componentDidMount() {
-    this.getCurrentUser();
+    //this.getCurrentUser();
   }
 
   getCurrentUser = () => {
@@ -26,7 +26,7 @@ class App extends Component {
       .catch(this.getCurrentOnError);
   };
   getCurrentOnSuccess = response => {
-    debugger
+    debugger;
     this.setState({
       isAuthorized: true,
       currentUser: response.data
@@ -58,10 +58,10 @@ class App extends Component {
   getComponents = (route, index) => {
     return (
       <Route
-        key={index}      
+        key={index}
         exact
         path={route.path}
-        render={props => <route.component {...props} {...this.state}/>}
+        render={props => <route.component {...props} {...this.state} />}
       />
     );
   };

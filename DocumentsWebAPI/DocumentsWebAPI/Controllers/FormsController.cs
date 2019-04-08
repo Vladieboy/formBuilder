@@ -10,7 +10,8 @@ using static DocumentsWebAPI.Models.Forms.FormViewModels;
 
 namespace DocumentsWebAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
+    [AllowAnonymous]
     [RoutePrefix("api/Forms")]
     public class FormsController : ApiController
     {
@@ -18,6 +19,21 @@ namespace DocumentsWebAPI.Controllers
         public FormsController()
         {
             formServices = new FormServices();
+        }
+
+        [Route, HttpPost]
+        public IHttpActionResult CreateForm(Form model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            int rowsAffected = formServices.Add(model);
+            if(rowsAffected > 0)
+            {
+                return BadRequest("There was an error processing your request.");
+            }
+            return Ok();
         }
 
         [Route("create/vacation"), HttpPost]

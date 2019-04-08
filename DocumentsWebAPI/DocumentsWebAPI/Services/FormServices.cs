@@ -12,6 +12,20 @@ namespace DocumentsWebAPI.Services
     public class FormServices
     {
 
+        public int Add(Form data)
+        {
+            using (var conn = GetJuliesConnection())
+            {
+                var cmd = conn.CreateCommand();
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "dbo.Documents_Insert";
+                cmd.Parameters.AddWithValue("@Name", data.Name);
+                cmd.Parameters.AddWithValue("@FormFields", data.FormFields);
+                cmd.Parameters.AddWithValue("@IsRequiredByEmployeeManager", data.IsRequiredByEmployeeManager);
+                return cmd.ExecuteNonQuery();
+            }
+        }
+
         public int AddVacationRequest(Models.Forms.FormBindingModels.VacationForm data)
         {
 
@@ -58,6 +72,12 @@ namespace DocumentsWebAPI.Services
         private SqlConnection GetConnection()
         {
             var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            conn.Open();
+            return conn;
+        }
+        private SqlConnection GetJuliesConnection()
+        {
+            var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["JuliesConnection"].ConnectionString);
             conn.Open();
             return conn;
         }

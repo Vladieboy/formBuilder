@@ -51,11 +51,12 @@ function Header(props) {
               </Tooltip>
             </Grid>
             <Grid item>
-            <button type="button" onClick={props.logOut}><Typography>Log Out</Typography></button>
-              {/* <IconButton color="inherit" className={classes.iconButtonAvatar}>
-                <Avatar className={classes.avatar} src="/static/images/avatar/1.jpg" />
-              </IconButton> */}
+
+              <IconButton color="inherit" className={classes.iconButtonAvatar}>
+                <Avatar className={classes.avatar} src="https://ae01.alicdn.com/kf/HTB118uvSXXXXXcVXXXXq6xXFXXXH/9-6cm-9-8cm-Car-Sticker-Cartoon-Funny-Ninja-Vinyl-Decal-Black-Silver-Accessories-S6-4099.jpg_640x640.jpg"/>
+              </IconButton>
             </Grid>
+              <Grid><Button className={classes.button} variant="outlined" color="inherit" size="small" onClick={props.logOut}>Log Out</Button></Grid>
           </Grid>
         </Toolbar>
       </AppBar>

@@ -8,6 +8,15 @@ namespace DocumentsWebAPI.Models.Forms
 {
     public class FormBindingModels
     {
+        public class Form
+        {
+            [Required]
+            public string Name { get; set; }
+            [Required]
+            public string FormFields { get; set; }
+            [Required]
+            public bool IsRequiredByEmployeeManager { get; set; }
+        }
         public class VacationForm
         {
             [Required]

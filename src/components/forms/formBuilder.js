@@ -43,9 +43,8 @@ const FormBuilder = () => {
 
       {fields.map((field, idx) => {
         return (
-            
           <div className="form" key={`${field}-${idx}`}>
-          <label>Question</label>
+          <label>Question {idx + 1}: </label>
             <input
               type="text"
               placeholder="Enter text"

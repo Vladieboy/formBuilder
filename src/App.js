@@ -33,6 +33,7 @@ const handleRespData = (data) => {
   };
 
   return <>
+  <FormBuilder />
   {isAuthorized ? <Navbar /> : null}
 
   {isAuthorized ? getAuthUser() : (

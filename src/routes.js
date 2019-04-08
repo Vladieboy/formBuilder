@@ -27,12 +27,12 @@ const routes = [
     component: rolesPage,
     display: true
   },
-  // {
-  //   path: "/requests",
-  //   name: "reqs",
-  //   component: Requests,
-  //   display: true
-  // },
+  {
+    path: "/requests",
+    name: "reqs",
+    component: Requests,
+    display: true
+  },
   {
     path: "/companyStructurePage",
     name: "companyStructurePage",

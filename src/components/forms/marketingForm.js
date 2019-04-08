@@ -18,7 +18,6 @@ const [vacationFormData, setVacationFormData] = useState(
 
 const handleValidSubmit = (event, values) => {
     console.log("event", event, "values", values);
-    // console.log(startDate)
     setVacationFormData(values.email, values.userId, values.notes)
     saveToDB(values)
   };
@@ -44,7 +43,7 @@ const saveToDB = (values) => {
         <Container fluid>
         <Row>
           <Col sm="12" md={{ size: 6, offset: 3 }}>
-            <h3>Vacation Form</h3>
+            <h3>Marketing Form</h3>
             <AvForm
               onValidSubmit={handleValidSubmit}
               onInvalidSubmit={handleInvalidSubmit}

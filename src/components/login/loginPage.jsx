@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as userService from "../../services/userService";
-import { saveState } from "../../localStorage";
+// import { saveState } from "../../localStorage";
 import { AvForm, AvField } from "availity-reactstrap-validation";
 import { Button, Container, Row, Col } from "reactstrap";
 
@@ -15,6 +15,7 @@ const Login = props => {
   const handleInvalidSubmit = (event, errors, values) => {
     console.log(errors);
   };
+
 
   const handleLogin = () => {
     var details = {
@@ -32,9 +33,17 @@ const Login = props => {
     formBody = formBody.join("&");
     userService
       .login(formBody)
-      .then(saveState(details))
+      .then(onLoginSuccess)
       .catch();
   };
+
+  const onLoginSuccess = (resp) => {
+    debugger
+    console.log(resp.data)
+    console.log(props)
+    props.handler(resp.data)
+    // saveState(userInfo)
+  }
 
   useEffect(() => {
     handleLogin();

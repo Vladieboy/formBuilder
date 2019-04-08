@@ -12,8 +12,8 @@ const selectForm = () => {
         <FormGroup>
         <Label for="exampleSelect">Select</Label>
         <Input type="select" onChange={handleSelect} name="select" id="exampleSelect" >
-          <option value="vacation" >Marketing</option>
-          <option value="marketing" >Vacation</option>
+          <option value="vacation" >Vacation</option>
+          <option value="marketing" >Marketing</option>
         </Input>
       </FormGroup>
     )

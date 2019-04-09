@@ -63,7 +63,7 @@ setModal(false)
     return (
         <>
         <Container>
-        <h3>Users</h3>
+        <h3>Pending Requests</h3>
 <Table responsive>
  <thead>
      <tr>

@@ -2,11 +2,13 @@ import registrationDisplay from "./components/registration/registrationDisplay";
 import loginPage from "./components/login/loginPage";
 import rolesPage from "./components/dash/rolesPage";
 import PTO from "./components/dash/myPTO";
-import FormBuilder from "./components/dash/formbuilder";
+// import FormBuilder from "./components/dash/formbuilder";
 import companyStructurePage from "./components/dash/comapnyStructurePage";
 import Requests from "./components/dash/Requests";
 import Dash from "./components/dash/dash";
-import formDisplayContainer from "./components/forms/formDisplayContainer";
+import FormDisplayContainer from "./components/forms/formDisplayContainer"
+import FormBuilder from "./components/forms/formBuilder"
+
 
 const routes = [
   {
@@ -21,12 +23,12 @@ const routes = [
     component: loginPage,
     display: true
   },
-  {
-    path: "/roles",
-    name: "roles",
-    component: rolesPage,
-    display: true
-  },
+  // {
+  //   path: "/roles",
+  //   name: "roles",
+  //   component: rolesPage,
+  //   display: false
+  // },
   {
     path: "/requests",
     name: "reqs",
@@ -45,22 +47,22 @@ const routes = [
     component: FormBuilder,
     display: true
   },
+  // {
+  //   path: "/PTO",
+  //   name: "PTO",
+  //   component: PTO,
+  //   display: true
+  // },
   {
-    path: "/PTO",
-    name: "PTO",
-    component: PTO,
-    display: true
-  },
-  {
-    path: "/Dash",
+    path: "/dash",
     name: "Dash",
     component: Dash,
     display: true
   },
   {
-    path: "/formDisplayContainer",
+    path: "/fdc",
     name: "formDisplayContainer",
-    component: formDisplayContainer,
+    component: FormDisplayContainer,
     display: true
   },
 ];

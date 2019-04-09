@@ -12,7 +12,7 @@ const VacationForm = (props) =>{
  
 
 const [vacationFormData, setVacationFormData] = useState(
-    {name: '', userId: '', notes:'', startDate: '', endDate: ''}
+    {name: '', notes:'', startDate: '', endDate: ''}
 )
 
 
@@ -28,8 +28,7 @@ const saveToDB = (values) => {
     let obj = {
       Id: 0,
       Name: values.email,
-      UserId: values.UserId,
-      Notes: values.notes,
+      Data: values.notes,
       DateStart: values.startDate,
       DateEnd: values.endDate
     }
@@ -56,13 +55,7 @@ const saveToDB = (values) => {
                 value={vacationFormData.name}
                 required
               />
-              <AvField
-                name="UserId"
-                label="UserId"
-                type="number"
-                value={vacationFormData.userId}
-                required
-              />
+         
               <AvField
                 name="notes"
                 label="Notes"

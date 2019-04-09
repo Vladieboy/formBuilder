@@ -3,6 +3,10 @@ import * as userService from "../../services/userService";
 // import { saveState } from "../../localStorage";
 import { AvForm, AvField } from "availity-reactstrap-validation";
 import { Button, Container, Row, Col } from "reactstrap";
+import {setLogin} from "../../actions/userActions"
+
+import {connect} from 'react-redux'
+
 
 const Login = props => {
   const [userData, setUserData] = useState([{ email: "", password: "" }]);
@@ -41,8 +45,8 @@ const Login = props => {
     debugger
     console.log(resp.data)
     console.log(props)
-    props.handler(resp.data)
-    // saveState(userInfo)
+    // props.handler(resp.data)
+    setLogin(resp.data)
   }
 
   useEffect(() => {
@@ -73,4 +77,11 @@ const Login = props => {
   );
 };
 
-export default Login;
+const mapStateToProps =(state) => {
+  return {
+    user: state.userData
+  };
+};
+
+
+export default connect(mapStateToProps, null)(Login);

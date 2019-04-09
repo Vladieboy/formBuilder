@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from "react";
-
+import {connect} from 'react-redux'
 import { withRouter, Route, Switch, Redirect, Link } from "react-router-dom";
 import routes from "../src/routes";
 import Navbar from "./components/navbar/Navbar"
-import FormBuilder from "./components/forms/formBuilder"
+import {setLogin} from "./actions/userActions"
+
+
+
 import Login from "./components/login/loginPage"
 
 
@@ -15,8 +18,6 @@ const [userInfo, setUserInfo] = useState('')
 
 const handleRespData = (data) => {
   console.log(data)
-  
-
 }
 
 
@@ -28,12 +29,13 @@ const handleRespData = (data) => {
 
   const getAuthUser = () => {
     return (<div>
+      {/* <FormDisplayContainer/> */}
     <Switch>{getRoutes(routes)}</Switch>
       </div>)
   };
 
   return <>
-  <FormBuilder />
+  
   {isAuthorized ? <Navbar /> : null}
 
   {isAuthorized ? getAuthUser() : (
@@ -47,4 +49,18 @@ const handleRespData = (data) => {
   </>;
 };
 
-export default withRouter(App);
+const mapStateToProps = (state) => {
+  return {
+      user: state.user
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      setLogin: (name) => {
+            dispatch(setLogin(name));
+        }
+    };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App)) ;

@@ -10,13 +10,13 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAuthorized: true,
+      isAuthorized: false,
       currentUser: {}
     };
   }
 
   componentDidMount() {
-    //this.getCurrentUser();
+    this.getCurrentUser();
   }
 
   getCurrentUser = () => {
@@ -26,7 +26,6 @@ class App extends Component {
       .catch(this.getCurrentOnError);
   };
   getCurrentOnSuccess = response => {
-    debugger;
     this.setState({
       isAuthorized: true,
       currentUser: response.data
@@ -40,12 +39,14 @@ class App extends Component {
     });
   };
   setAuthorized = () => {
-    this.setState(
+    userService.getCurrent().then(response => this.setState(
       {
-        isAuthorized: true
+        isAuthorized: true,
+        currentUser: response.data
       },
       this.props.history.push("/dashboard")
-    );
+    )).catch(this.getCurrentOnError)
+    
   };
   logOut = () => {
     userService.logOut();

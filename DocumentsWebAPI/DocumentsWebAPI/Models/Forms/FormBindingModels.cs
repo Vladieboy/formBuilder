@@ -14,8 +14,19 @@ namespace DocumentsWebAPI.Models.Forms
             public string Name { get; set; }
             [Required]
             public string FormFields { get; set; }
-            [Required]
-            public bool IsRequiredByEmployeeManager { get; set; }
+            //[Required]
+            //public bool IsRequiredByEmployeeManager { get; set; }
+
+            public List<Approver> ApproverList { get; set; }
+
+            //[Required]
+            //public int CreatedBy { get; set; }
+        }
+
+        public class Approver
+        {
+            public int EmployeeId { get; set; }
+            public int Step { get; set; }
         }
         public class VacationForm
         {

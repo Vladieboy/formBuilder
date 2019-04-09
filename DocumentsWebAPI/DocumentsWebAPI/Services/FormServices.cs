@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -11,17 +12,51 @@ namespace DocumentsWebAPI.Services
 {
     public class FormServices
     {
+        public List<Document> SelectAll()
+        {
+            using (var conn = GetConnection())
+            {
+                var cmd = conn.CreateCommand();
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "dbo.Documents_Select_All";
+
+                var documents = new List<Document>();
+
+                using (var reader = cmd.ExecuteReader())
+                {
+
+                    // Check the domain model for all props sql metadata returned from selection
+                    while (reader.Read())
+                    {
+                        var document = new Document();
+                        document.FormId = (int)reader["Id"];
+                        document.Name = (string)reader["Name"];
+                        document.FormFields = (string)reader["FormFields"];
+                        documents.Add(document);
+                    }
+
+                }
+
+                return documents;
+            }
+        }
 
         public int Add(Form data)
         {
-            using (var conn = GetJuliesConnection())
+            using (var conn = GetConnection())
             {
                 var cmd = conn.CreateCommand();
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.CommandText = "dbo.Documents_Insert";
                 cmd.Parameters.AddWithValue("@Name", data.Name);
                 cmd.Parameters.AddWithValue("@FormFields", data.FormFields);
-                cmd.Parameters.AddWithValue("@IsRequiredByEmployeeManager", data.IsRequiredByEmployeeManager);
+                //cmd.Parameters.AddWithValue("@IsRequiredByEmployeeManager", data.IsRequiredByEmployeeManager);
+                var approvers = new SqlParameter("@Approvers", SqlDbType.Structured);
+                if (data.ApproverList.Any())
+                {
+                    approvers.Value = new Data.Structured.ApproverLineTable(data.ApproverList);
+                };
+                cmd.Parameters.Add(approvers);
                 return cmd.ExecuteNonQuery();
             }
         }

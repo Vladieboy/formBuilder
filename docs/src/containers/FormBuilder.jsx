@@ -46,7 +46,8 @@ class FormBuilder extends React.Component {
     open: false,
     addField: {
       inputType: "",
-      label: ""
+      label: "",
+      approver: {label: "", employeeId: 0}
     },
     approverList: [],
     formFields: []
@@ -61,7 +62,7 @@ class FormBuilder extends React.Component {
                 </Avatar>
               </ListItemAvatar>
               <ListItemText
-                primary={approver}
+                primary={approver.label}
                 //secondary={secondary ? 'Secondary text' : null}
               />
               <ListItemSecondaryAction>
@@ -88,6 +89,11 @@ class FormBuilder extends React.Component {
       [e.target.name]: e.target.checked
     });
   };
+  handleChangeFirstLevel = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
 
   handleChange = e => {
     const addField = {
@@ -105,27 +111,49 @@ class FormBuilder extends React.Component {
       addField: {
         inputType: "",
         label: "",
-        approver: ""
+        approver: {label: "", employeeId: null}
       }
     });
   };
 
   addApprover = () => {
     let approverList = [...this.state.approverList, this.state.addField.approver];
+    debugger;
     this.setState({
       ...this.state,
       addField: {
         inputType: "",
         label: "",
-        approver: ""
+        approver: {label: "", employeeId: null}
     },
     approverList
   });
   }
 
   submitFormCreation = () => {
-
+    debugger;
+    const approverList = [];
+    this.state.approverList.map((approver, index) => approverList.push({...approver, step: index+1}))
+    const {name, IsRequiredByEmployeeManager } = this.state
+    let payload = {
+      name,
+      //IsRequiredByEmployeeManager,
+      approverList,
+      formFields: JSON.stringify(this.state.formFields),
+      //createdBy: this.props.currentUser.empolyeeId
+    }
+    formServices.addForm(payload).then(() => this.setState({
+      formFields: [...this.state.formFields, { ...this.state.addField }],
+      addField: {
+        inputType: "",
+        label: "",
+        approver: {label: "", employeeId: null}
+      },
+      open: false
+    })).catch(response => console.log(response))
   }
+
+  
 
   renderForm = (field, index) => {
     switch (field.inputType) {
@@ -242,6 +270,7 @@ class FormBuilder extends React.Component {
               color="primary"
               className={classes.submit}
               onClick={this.addField}
+              disabled={this.state.addField.inputType === "" || this.state.addField.label === "" ||  this.state.addField.selectOptions === ""}
             >
               Add Form Field
             </Button>
@@ -280,9 +309,10 @@ class FormBuilder extends React.Component {
                 <TextField
                   autoFocus
                   margin="dense"
-                  name="formName"
+                  name="name"
                   id="name"
                   label="Form Name"
+                  onChange={this.handleChangeFirstLevel}
                   type="text"
                   fullWidth
                 />
@@ -306,13 +336,16 @@ class FormBuilder extends React.Component {
               margin="normal"
             >          
             {/* The value of the menu item should be the employee number if the person selected  */}
-                <MenuItem key="0" value="Caz">
+                <MenuItem key="0" value={{label: "Employee Manager", employeeId: 0}}>
+                  Employee Manager
+                </MenuItem>
+                <MenuItem key="1" value="Caz">
                   Caz
                 </MenuItem>
-                <MenuItem key="1" value="Jim">
+                <MenuItem key="2" value="Jim">
                   Jim
                 </MenuItem>
-                <MenuItem key="2" value="Bill">
+                <MenuItem key="3" value="Bill">
                   Bill
                 </MenuItem>
             </TextField>
@@ -332,19 +365,19 @@ class FormBuilder extends React.Component {
                 </div>
               </Grid>
 
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="IsRequiredByEmployeeManager" color="primary" name="IsRequiredByEmployeeManager" checked={this.state.IsRequiredByEmployeeManager} onChange={this.handleChangeCheckBox} />}
                   label="Requires approval of employee's immediate manager."
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.submitFormCreation} color="primary">
               Save Form
             </Button>
           </DialogActions>

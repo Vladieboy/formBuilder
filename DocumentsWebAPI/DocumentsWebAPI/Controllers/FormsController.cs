@@ -29,7 +29,7 @@ namespace DocumentsWebAPI.Controllers
                 return BadRequest(ModelState);
             }
             int rowsAffected = formServices.Add(model);
-            if(rowsAffected > 0)
+            if(rowsAffected == 0)
             {
                 return BadRequest("There was an error processing your request.");
             }
@@ -53,17 +53,10 @@ namespace DocumentsWebAPI.Controllers
         }
 
         [Route(""), HttpGet]
-        public IHttpActionResult GetPendingEmployeeRequests(MyDocuments model)
+        public IHttpActionResult GetAllDocuments()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var documents = new PendingDocuments();
-            documents = formServices.getPendingDocuments(model);
-            return Ok(documents);
-
-            
+            var documents = formServices.SelectAll();
+            return Ok(documents);    
         }
     }
 }

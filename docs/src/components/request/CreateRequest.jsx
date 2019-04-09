@@ -8,6 +8,11 @@ import VacationRequestForm from "./VacationRequestForm";
 import ReimbursementRequestForm from "./ReimbursementRequestForm";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
+import * as formService from "../../services/forms";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import Button from "@material-ui/core/Button";
 
 const styles = theme => ({
   layout: {
@@ -32,30 +37,90 @@ const styles = theme => ({
   }
 });
 
-const requests = [
-  {
-    value: "vacation",
-    label: "Vacation"
-  },
-  {
-    value: "reimbursement",
-    label: "Reimbursement"
-  }
-];
-
 class CreateRequest extends React.Component {
-  state = { requestType: "" };
+  state = { 
+    documents: [],
+    formData: {}
+  };
+
+submitForm = () => {
+  let formData = JSON.stringify(this.state.formData);
+  let payload = {...this.state.selectedDocument, formData, ...this.props.currentUser};
+  console.log(payload);
+  //formService.submitForm(payload).then().catch(response => console.log(response))
+}
+
+  componentDidMount(){
+    this.getAllDocuments()
+    
+  }
+  getAllDocuments = () => {
+    formService.selectAll().then(this.getAllDocumentsSuccess).catch(this.logError)
+  }
+  
+  getAllDocumentsSuccess = response => {
+    this.setState({
+      documents: response.data
+    })
+  }
+
+  logError(response) {
+    console.log(response)
+  }
 
   handleChange = e => this.setState({ [e.target.name]: e.target.value });
+  handleFormData = e => this.setState({formData: {...this.state.formData, [e.target.name]: e.target.value}})
 
-  getRequestContent = () => {
-    switch (this.state.requestType) {
-      case "vacation":
-        return <VacationRequestForm {...this.props} />;
-      case "reimbursement":
-        return <ReimbursementRequestForm {...this.props} />;
-      default:
-        return;
+  selectDocument = e => {
+    let selectedDocument = {...this.state.documents[e.target.value]};
+    selectedDocument.FormFields = JSON.parse(selectedDocument.FormFields);
+    this.setState({
+      ...this.state,
+      selectedDocument
+    })
+  }
+
+  getDocumentContent = (field, index) => {
+
+    switch (field.inputType) {
+      case "text":
+        return (<FormControl margin="normal" key={index} required fullWidth>
+          <InputLabel htmlFor={field.label}>{field.label}</InputLabel>
+          <Input
+            //value={this.state.addField.label}
+            name={`${field.label}-${index}`}
+            type="text"
+            id={field.label}
+          onChange={this.handleFormData}
+          />
+        </FormControl>)
+
+      case "select":
+        let selectOptionsArray = field.selectOptions.split(",");
+        return (<TextField
+          key={index}
+          required
+          name={`${field.label}-${index}`}
+          select
+          label={field.label}
+          fullWidth
+          //className={classes.textField}
+          //value={this.state.addField.inputType}
+          onChange={this.handleFormData}
+          SelectProps={{
+            MenuProps: {
+              //className: classes.menu
+            }
+          }}
+          helperText="Please select an input type for the form field."
+          margin="normal"
+        >
+          {selectOptionsArray.map((option, index) => (
+            <MenuItem key={index} value={option}>
+              {option}
+            </MenuItem>
+          ))}
+        </TextField>)
     }
   };
 
@@ -77,8 +142,8 @@ class CreateRequest extends React.Component {
                 label="Request Type"
                 fullWidth
                 className={classes.textField}
-                value={this.state.requestType}
-                onChange={this.handleChange}
+                //value={this.state.selectedDocument.Name}
+                onChange={this.selectDocument}
                 SelectProps={{
                   MenuProps: {
                     className: classes.menu
@@ -87,13 +152,24 @@ class CreateRequest extends React.Component {
                 helperText="Please select a request type."
                 margin="normal"
               >
-                {requests.map(option => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
+                {this.state.documents.length > 0 && this.state.documents.map((option, index) => {
+                  return(
+                  <MenuItem key={option.FormId} value={index} id={index}>
+                    {option.Name}
                   </MenuItem>
-                ))}
+                )})}
               </TextField>
-              {this.getRequestContent()}
+             {this.state.selectedDocument && this.state.selectedDocument.FormFields.map(this.getDocumentContent)}
+             {this.state.selectedDocument && <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              color="primary"
+              //className={classes.submit}
+              onClick={this.submitForm}
+            >
+              Submit
+            </Button>}
             </React.Fragment>
           </Paper>
         </main>

@@ -7,6 +7,12 @@ namespace DocumentsWebAPI.Models.Forms
 {
     public class FormViewModels
     {
+        public class Document
+        {
+            public int FormId { get; set; }
+            public string Name { get; set; }
+            public string FormFields { get; set; }
+        }
 
         public class PendingDocuments
         {
